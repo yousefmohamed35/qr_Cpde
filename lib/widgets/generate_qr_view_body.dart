@@ -4,11 +4,14 @@ import 'package:qrcode/widgets/select_button_widget.dart';
 class GenerateQrViewBody extends StatelessWidget {
   const GenerateQrViewBody({
     super.key,
-    required this.selectedType, required this.onSelectionChanged,
+    required this.selectedType,
+    required this.onSelectionChanged,
+    required this.buildTextFiled,
   });
 
   final String selectedType;
-   final void Function(Set<String>) onSelectionChanged;
+  final void Function(Set<String>) onSelectionChanged;
+  final Widget buildTextFiled;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,6 +34,8 @@ class GenerateQrViewBody extends StatelessWidget {
                       selectedType: selectedType,
                       onSelectionChanged: onSelectionChanged,
                     ),
+                    SizedBox(height: 24),
+                    buildTextFiled,
                   ],
                 ),
               ),
@@ -41,4 +46,3 @@ class GenerateQrViewBody extends StatelessWidget {
     );
   }
 }
-

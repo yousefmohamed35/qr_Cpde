@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qrcode/functions/data.dart';
 import 'package:qrcode/widgets/generate_qr_view_body.dart';
-import 'package:qrcode/widgets/select_button_widget.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -71,28 +70,32 @@ class _GenerateQrViewState extends State<GenerateQrView> {
               qrData = '';
             });
           },
+          buildTextFiled: buildInputField(),
         ),
       ),
     );
   }
 
-  TextField buildTextField(TextEditingController controller, String label) {
-    return TextField(
-      controller: controller,
-      decoration: InputDecoration(
-        labelText: label,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
+  Widget buildTextField(TextEditingController controller, String label) {
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: TextField(
+        controller: controller,
+        decoration: InputDecoration(
+          labelText: label,
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
+        ),
+        onChanged: (_) {
+          setState(() {});
+          qrData = generateQRData();
+        },
       ),
-      onChanged: (_) {
-        setState(() {});
-        qrData = generateQRData();
-      },
     );
   }
 
   Widget buildInputField() {
     switch (selectedType) {
-      case 'contact':
+      case 'Contact':
         return Column(
           children: [
             buildTextField(_controllers['name']!, 'Name'),
@@ -100,7 +103,7 @@ class _GenerateQrViewState extends State<GenerateQrView> {
             buildTextField(_controllers['email']!, 'Email'),
           ],
         );
-      case 'url':
+      case 'Url':
         return buildTextField(_controllers['url']!, 'URL');
       default:
         return TextField(
