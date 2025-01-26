@@ -5,7 +5,8 @@ class GenerateAndScanItem extends StatelessWidget {
   const GenerateAndScanItem({
     super.key,
     required this.onTap,
-    required this.icon, required this.title,
+    required this.icon,
+    required this.title,
   });
   final void Function() onTap;
   final IconData icon;
@@ -15,12 +16,12 @@ class GenerateAndScanItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.all(12),
         height: 200,
         width: 250,
         decoration: BoxDecoration(
           color: Colors.deepPurple,
-          borderRadius: BorderRadius.circular(26),
+          borderRadius: BorderRadius.circular(24),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qrcode/Generate_qr_view.dart';
+import 'package:qrcode/generate_qr_view.dart';
 import 'package:qrcode/scan_qr_view.dart';
 import 'package:qrcode/widgets/generate_and_scan_item.dart';
 
