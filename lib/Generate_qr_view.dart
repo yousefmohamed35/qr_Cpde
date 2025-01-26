@@ -1,7 +1,8 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:qrcode/functions/data.dart';
+import 'package:qrcode/widgets/select_button_widget.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -57,7 +58,45 @@ class _GenerateQrViewState extends State<GenerateQrView> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: Scaffold());
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.deepPurple,
+        appBar: buildAppBar(),
+        body: Container(
+          padding: EdgeInsets.all(16),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Card(
+                  color: Colors.white,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Column(
+                      children: [
+                        SelectButtonWidget(
+                          selectedType: selectedType,
+                          onSelectionChanged: (Set<String> selection) {
+                            setState(() {
+                              selectedType = selection.first;
+                              qrData = '';
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   TextField buildTextField(TextEditingController controller, String label) {
@@ -101,3 +140,4 @@ class _GenerateQrViewState extends State<GenerateQrView> {
     }
   }
 }
+
