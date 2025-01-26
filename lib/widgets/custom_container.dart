@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:qrcode/Generate_qr_view.dart';
-import 'package:qrcode/widgets/generate_and_scan_item.dart';
+import 'package:qrcode/widgets/custom_container_child.dart';
+
 
 class CustomContainer extends StatelessWidget {
   const CustomContainer({super.key});
@@ -22,31 +21,9 @@ class CustomContainer extends StatelessWidget {
             ),
           ],
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            GenerateAndScanItem(
-              onTap:
-                  () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => GenerateQrView()),
-                  ),
-              icon: Icons.qr_code,
-              title: "Generate QR Code",
-            ),
-            GenerateAndScanItem(
-              onTap:
-                  () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => GenerateQrView()),
-                  ),
-              icon: Icons.qr_code,
-              title: "Generate QR Code",
-            ),
-          ],
-        ),
+        child: CustomContainerChild(),
       ),
     );
   }
 }
+
