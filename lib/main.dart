@@ -5,6 +5,7 @@ import 'package:qrcode/home_view.dart';
 void main() {
   runApp(const QrCode());
 }
+
 class QrCode extends StatelessWidget {
   const QrCode({super.key});
 
@@ -16,8 +17,10 @@ class QrCode extends StatelessWidget {
         primarySwatch: Colors.deepPurple,
         useMaterial3: true,
         textTheme: GoogleFonts.poppinsTextTheme(),
-        colorScheme: ColorScheme.fromSeed(brightness: Brightness.light,seedColor: Colors.deepPurple ,),
-
+        colorScheme: ColorScheme.fromSeed(
+          brightness: Brightness.light,
+          seedColor: Colors.deepPurple,
+        ),
       ),
       home: HomeView(),
     );

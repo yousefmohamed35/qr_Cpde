@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:qrcode/widgets/generate_and_scan_item.dart';
 
 class CustomContainer extends StatelessWidget {
-  const CustomContainer({
-    super.key,
-  });
+  const CustomContainer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,15 @@ class CustomContainer extends StatelessWidget {
             ),
           ],
         ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [GenerateAndScanItem(onTap: onTap, icon: icon, title: title)],
+        ),
       ),
     );
   }
 }
+
+
+
