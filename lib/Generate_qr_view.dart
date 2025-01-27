@@ -62,7 +62,7 @@ class _GenerateQrViewState extends State<GenerateQrView> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.deepPurple,
-        appBar: buildAppBar(),
+        appBar: buildAppBar(title: 'Generate QR Code'),
         body: GenerateQrViewBody(
           selectedType: selectedType,
           onSelectionChanged: (Set<String> selection) {
