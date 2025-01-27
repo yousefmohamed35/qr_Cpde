@@ -3,7 +3,6 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qrcode/functions/data.dart';
 
-
 class ScanQrView extends StatefulWidget {
   const ScanQrView({super.key});
 
@@ -31,7 +30,14 @@ class _ScanQrViewState extends State<ScanQrView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: buildAppBar(title: 'Scan QR Code'));
+    return Scaffold(
+      backgroundColor: Colors.deepPurple,
+      appBar: buildAppBar(title: 'Scan QR Code'),
+      body:
+          hasPermission
+              ? Column()
+              : NotHasPermission(),
+    );
   }
 
   Future<void> checkPermission() async {
@@ -50,9 +56,12 @@ class _ScanQrViewState extends State<ScanQrView> {
     } else if (data.startsWith('BEGIN:VCARD')) {
       type = "Contact";
     }
-    customShowModelBottomSheet(context);
+    customShowModelBottomSheet(
+      context,
+      type,
+      scannedData,
+      _mobileScannerController,
+    );
   }
-
- 
 }
 

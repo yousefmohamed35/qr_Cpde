@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:qrcode/widgets/code_body.dart';
 import 'package:qrcode/widgets/custom_line.dart';
 
 class ShowModelSheetWidget extends StatelessWidget {
-  const ShowModelSheetWidget({super.key, required this.type});
+  const ShowModelSheetWidget({
+    super.key,
+    required this.type,
+    required this.scrollController,
+    required this.scannedData, required this.mobileScannerController,
+  });
   final String type;
+  final ScrollController scrollController;
+  final String scannedData;
+  final MobileScannerController mobileScannerController;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,8 +38,15 @@ class ShowModelSheetWidget extends StatelessWidget {
             ),
           ),
           SizedBox(height: 16),
+          Expanded(
+            child: SingleChildScrollView(
+              controller: scrollController,
+              child: CodeBody(scannedData: scannedData, type: type, mobileScannerController:mobileScannerController ,),
+            ),
+          ),
         ],
       ),
     );
   }
 }
+
