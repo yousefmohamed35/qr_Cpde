@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qrcode/functions/data.dart';
+import 'package:qrcode/widgets/not_has_permission.dart';
 
 class ScanQrView extends StatefulWidget {
   const ScanQrView({super.key});
@@ -30,14 +31,13 @@ class _ScanQrViewState extends State<ScanQrView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.deepPurple,
-      appBar: buildAppBar(title: 'Scan QR Code'),
-      body:
-          hasPermission
-              ? Column()
-              : NotHasPermission(),
-    );
+    return hasPermission
+        ? 
+        : NotHasPermission(
+          onPressed: () {
+            checkPermission();
+          },
+        );
   }
 
   Future<void> checkPermission() async {
@@ -64,4 +64,3 @@ class _ScanQrViewState extends State<ScanQrView> {
     );
   }
 }
-
