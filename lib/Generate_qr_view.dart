@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
@@ -26,14 +27,14 @@ class _GenerateQrViewState extends State<GenerateQrView> {
   };
   String generateQRData() {
     switch (selectedType) {
-      case 'contact':
+      case 'Contact':
         return '''BEGIN:VCARD
         VERSION:3.0
         FN: ${_controllers['name']?.text}
         TEL: ${_controllers['phone']?.text}
         EMAIL: ${_controllers['email']?.text}
         END:VCARD''';
-      case 'url':
+      case 'Url':
         String url = _controllers['url']?.text ?? '';
         if (!url.startsWith('https://') && !url.startsWith('http://')) {
           url = 'https://$url';
@@ -67,10 +68,14 @@ class _GenerateQrViewState extends State<GenerateQrView> {
           onSelectionChanged: (Set<String> selection) {
             setState(() {
               selectedType = selection.first;
+              log(qrData);
               qrData = '';
             });
           },
           buildTextFiled: buildInputField(),
+          qrData: qrData,
+          controller: _screenshotController,
+          onPressed: () => shareQRcode(),
         ),
       ),
     );

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:qrcode/widgets/qr_code_generator.dart';
 import 'package:qrcode/widgets/select_button_widget.dart';
+import 'package:screenshot/screenshot.dart';
 
 class GenerateQrViewBody extends StatelessWidget {
   const GenerateQrViewBody({
@@ -7,13 +9,20 @@ class GenerateQrViewBody extends StatelessWidget {
     required this.selectedType,
     required this.onSelectionChanged,
     required this.buildTextFiled,
+    required this.qrData,
+    required this.controller,
+    this.onPressed,
   });
 
   final String selectedType;
   final void Function(Set<String>) onSelectionChanged;
   final Widget buildTextFiled;
+  final String qrData;
+  final ScreenshotController controller;
+  final void Function()? onPressed;
   @override
   Widget build(BuildContext context) {
+    final keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
     return Container(
       padding: EdgeInsets.all(16),
       child: SingleChildScrollView(
@@ -40,6 +49,14 @@ class GenerateQrViewBody extends StatelessWidget {
                 ),
               ),
             ),
+            SizedBox(height: 24),
+            if (qrData.isNotEmpty)
+              QrCodeGenerator(
+                controller: controller,
+                qrData: qrData,
+                onPressed: onPressed,
+              ),
+            SizedBox(height: keyboardHeight),
           ],
         ),
       ),
