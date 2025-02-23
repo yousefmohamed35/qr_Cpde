@@ -1,6 +1,7 @@
 # qrcode
 
 A new Flutter project.
+strike 
 
 ## Getting Started
 
