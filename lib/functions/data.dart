@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_contacts/contact.dart' as contacts;
 import 'package:flutter_contacts/properties/email.dart' as contacts;
 import 'package:flutter_contacts/properties/phone.dart' as contacts;
-
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:qrcode/widgets/show_model_sheet_widget.dart';
@@ -67,14 +66,29 @@ Future<void> saveContact(BuildContext context, {required String data}) async {
 
   try {
     await contact.insert();
-   
+
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(SnackBar(content: Text('Contact saved')));
   } catch (e) {
-   
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(SnackBar(content: Text('Faild')));
   }
+}
+
+Future<void> processScanedData(
+  String? data, {
+  required MobileScannerController controller,
+ required BuildContext context,
+}) async {
+  if (data == null) return;
+  controller.stop();
+  String type = "Text";
+  if (data.startsWith('http://') || data.startsWith('https://')) {
+    type = "Url";
+  } else if (data.startsWith('BEGIN:VCARD')) {
+    type = "Contact";
+  }
+  customShowModelBottomSheet(context, type, data, controller);
 }

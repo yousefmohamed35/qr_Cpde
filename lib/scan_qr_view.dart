@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:qrcode/functions/data.dart';
+import 'package:qrcode/widgets/has_permission_widget.dart';
 import 'package:qrcode/widgets/not_has_permission.dart';
 
 class ScanQrView extends StatefulWidget {
@@ -14,7 +14,7 @@ class ScanQrView extends StatefulWidget {
 class _ScanQrViewState extends State<ScanQrView> {
   bool hasPermission = false;
   bool isFlashOn = false;
-  String scannedData = '';
+
   late MobileScannerController _mobileScannerController;
   @override
   void initState() {
@@ -32,7 +32,16 @@ class _ScanQrViewState extends State<ScanQrView> {
   @override
   Widget build(BuildContext context) {
     return hasPermission
-        ? 
+        ? HasPermissionWidget(
+          onPressed: () {
+            setState(() {
+              isFlashOn = !isFlashOn;
+              _mobileScannerController.toggleTorch();
+            });
+          },
+          isFlashOn: isFlashOn,
+          controller: _mobileScannerController,
+        )
         : NotHasPermission(
           onPressed: () {
             checkPermission();
@@ -45,22 +54,5 @@ class _ScanQrViewState extends State<ScanQrView> {
     setState(() {
       hasPermission = status.isGranted;
     });
-  }
-
-  Future<void> processScanedData(String? data) async {
-    if (data == null) return;
-    _mobileScannerController.stop();
-    String type = "Text";
-    if (data.startsWith('http://') || data.startsWith('https://')) {
-      type = "Url";
-    } else if (data.startsWith('BEGIN:VCARD')) {
-      type = "Contact";
-    }
-    customShowModelBottomSheet(
-      context,
-      type,
-      scannedData,
-      _mobileScannerController,
-    );
   }
 }
