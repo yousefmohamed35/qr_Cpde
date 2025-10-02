@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qrcode/functions/data.dart';
+import 'package:qrcode/home_view.dart';
 import 'package:qrcode/widgets/generate_qr_view_body.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
@@ -27,13 +28,6 @@ class _GenerateQrViewState extends State<GenerateQrView> {
   };
   String generateQRData() {
     switch (selectedType) {
-      case 'Contact':
-        return '''BEGIN:VCARD
-        VERSION:3.0
-        FN: ${_controllers['name']?.text}
-        TEL: ${_controllers['phone']?.text}
-        EMAIL: ${_controllers['email']?.text}
-        END:VCARD''';
       case 'Url':
         String url = _controllers['url']?.text ?? '';
         if (!url.startsWith('https://') && !url.startsWith('http://')) {
@@ -76,6 +70,16 @@ class _GenerateQrViewState extends State<GenerateQrView> {
           qrData: qrData,
           controller: _screenshotController,
           onPressed: () => shareQRcode(),
+          onSaved: () {
+            saveQrCode(qrData);
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => HomeView()),
+            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('QR Code saved')));
+          },
         ),
       ),
     );
@@ -100,14 +104,6 @@ class _GenerateQrViewState extends State<GenerateQrView> {
 
   Widget buildInputField() {
     switch (selectedType) {
-      case 'Contact':
-        return Column(
-          children: [
-            buildTextField(_controllers['name']!, 'Name'),
-            buildTextField(_controllers['phone']!, 'Phone'),
-            buildTextField(_controllers['email']!, 'Email'),
-          ],
-        );
       case 'Url':
         return buildTextField(_controllers['url']!, 'URL');
       default:

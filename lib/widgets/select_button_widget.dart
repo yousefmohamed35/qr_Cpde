@@ -19,11 +19,6 @@ class SelectButtonWidget extends StatelessWidget {
           icon: Icon(Icons.text_fields),
         ),
         ButtonSegment(value: 'Url', label: Text("Url"), icon: Icon(Icons.link)),
-        ButtonSegment(
-          value: 'Contact',
-          label: Text("Contact"),
-          icon: Icon(Icons.contact_page),
-        ),
       ],
       selected: {selectedType},
       onSelectionChanged: onSelectionChanged,

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_contacts/contact.dart' as contacts;
-import 'package:flutter_contacts/properties/email.dart' as contacts;
-import 'package:flutter_contacts/properties/phone.dart' as contacts;
+
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:qrcode/models/qr_model.dart';
 import 'package:qrcode/widgets/show_model_sheet_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -50,32 +50,32 @@ Future<void> openUrl({required String url}) async {
   }
 }
 
-Future<void> saveContact(BuildContext context, {required String data}) async {
-  final line = data.split('\n');
-  String? name, phone, email;
-  for (var item in line) {
-    if (item.startsWith("FN:")) name = item.substring(3);
-    if (item.startsWith("TEL:")) name = item.substring(4);
-    if (item.startsWith("EMAIL:")) name = item.substring(5);
-  }
-  final contact =
-      contacts.Contact()
-        ..name.first = name ?? ''
-        ..phones = [contacts.Phone(phone ?? '')]
-        ..emails = [contacts.Email(email ?? '')];
+// Future<void> saveContact(BuildContext context, {required String data}) async {
+//   final line = data.split('\n');
+//   String? name, phone, email;
+//   for (var item in line) {
+//     if (item.startsWith("FN:")) name = item.substring(3);
+//     if (item.startsWith("TEL:")) name = item.substring(4);
+//     if (item.startsWith("EMAIL:")) name = item.substring(5);
+//   }
+//   final contact =
+//       contacts.Contact()
+//         ...first = name ?? ''
+//         ..phones = [contacts.Phone(phone ?? '')]
+//         ..emails = [contacts.Email(email ?? '')];
 
-  try {
-    await contact.insert();
+//   try {
+//     await contact.insert();
 
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text('Contact saved')));
-  } catch (e) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text('Faild')));
-  }
-}
+//     ScaffoldMessenger.of(
+//       context,
+//     ).showSnackBar(SnackBar(content: Text('Contact saved')));
+//   } catch (e) {
+//     ScaffoldMessenger.of(
+//       context,
+//     ).showSnackBar(SnackBar(content: Text('Faild')));
+//   }
+// }
 
 Future<void> processScanedData(
   String? data, {
@@ -91,4 +91,24 @@ Future<void> processScanedData(
     type = "Contact";
   }
   customShowModelBottomSheet(context, type, data, controller);
+}
+
+saveQrCode(String data) async {
+  final box = Hive.box<QrModel>('qrCodes');
+  final qrModel = QrModel(data: data, createdAt: DateTime.now());
+  await box.add(qrModel);
+}
+
+deleteQrCode(int index) async {
+  final box = Hive.box<QrModel>('qrCodes');
+  await box.deleteAt(index);
+}
+deleteAllQrCodes() async {
+  final box = Hive.box<QrModel>('qrCodes');
+  await box.clear();
+}
+
+Future<List<QrModel>> getAllQrCodes() async {
+  final box = Hive.box<QrModel>('qrCodes');
+  return box.values.toList();
 }

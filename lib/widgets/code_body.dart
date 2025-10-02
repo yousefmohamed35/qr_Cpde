@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:qrcode/functions/data.dart';
+import 'package:qrcode/home_view.dart';
 import 'package:share_plus/share_plus.dart';
 
 class CodeBody extends StatelessWidget {
@@ -33,15 +34,7 @@ class CodeBody extends StatelessWidget {
             icon: Icon(Icons.open_in_new),
             style: ElevatedButton.styleFrom(minimumSize: Size.fromHeight(50)),
           ),
-        if (type == "Contact")
-          ElevatedButton.icon(
-            onPressed: () {
-              saveContact(context, data: scannedData);
-            },
-            label: Text("save contact"),
-            icon: Icon(Icons.open_in_new),
-            style: ElevatedButton.styleFrom(minimumSize: Size.fromHeight(50)),
-          ),
+
         SizedBox(height: 16),
         Row(
           children: [
@@ -64,6 +57,26 @@ class CodeBody extends StatelessWidget {
                 label: Text("Scan Again "),
                 icon: Icon(Icons.qr_code_scanner),
               ),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton.icon(
+              onPressed: () {
+                saveQrCode(scannedData);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomeView()),
+                );
+                final snackBar = SnackBar(
+                  content: Text('QR Code saved successfully!'),
+                );
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              },
+              label: Text('save QR code'),
+              icon: Icon(Icons.save),
             ),
           ],
         ),

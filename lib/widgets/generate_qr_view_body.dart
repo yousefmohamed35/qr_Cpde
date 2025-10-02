@@ -12,6 +12,7 @@ class GenerateQrViewBody extends StatelessWidget {
     required this.qrData,
     required this.controller,
     this.onPressed,
+   required this.onSaved,
   });
 
   final String selectedType;
@@ -20,6 +21,7 @@ class GenerateQrViewBody extends StatelessWidget {
   final String qrData;
   final ScreenshotController controller;
   final void Function()? onPressed;
+  final void Function()? onSaved;
   @override
   Widget build(BuildContext context) {
     final keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
@@ -55,6 +57,7 @@ class GenerateQrViewBody extends StatelessWidget {
                 controller: controller,
                 qrData: qrData,
                 onPressed: onPressed,
+                onSaved: onSaved,
               ),
             SizedBox(height: keyboardHeight),
           ],

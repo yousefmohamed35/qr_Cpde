@@ -8,11 +8,13 @@ class QrCodeGenerator extends StatelessWidget {
     required this.controller,
     required this.qrData,
     required this.onPressed,
+    required this.onSaved,
   });
 
   final ScreenshotController controller;
   final String qrData;
   final void Function()? onPressed;
+  final void Function()? onSaved;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +43,11 @@ class QrCodeGenerator extends StatelessWidget {
           ),
         ),
         SizedBox(height: 24),
+        ElevatedButton.icon(
+          onPressed: onSaved,
+          label: Text('save QR code'),
+          icon: Icon(Icons.save),
+        ),
         ElevatedButton.icon(
           onPressed: onPressed,
           label: Text('share QR code'),
